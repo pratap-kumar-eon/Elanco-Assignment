@@ -42,20 +42,20 @@ export const searchCountries = async (req: Request, res: Response) => {
   const { name, capital, region, timezone } = req.query;
     const response = await axios.get(REST_COUNTRIES_API);
     let countries = response.data;
-    if (name) {
+    if (name || !name) {
       countries = countries.filter((country: any) =>
         country.name.common.toLowerCase().includes((name as string).toLowerCase())
       );
     }
-    if (capital) {
+    if (capital || !capital) {
       countries = countries.filter((country: any) =>
         country.capital && country.capital[0].toLowerCase().includes((capital as string).toLowerCase())
       );
     }
-    if (region) {
+    if (region || !region) {
       countries = countries.filter((country: any) => country.region === region);
     }
-    if (timezone) {
+    if (timezone || !timezone) {
       countries = countries.filter((country: any) => country.timezones.includes(timezone as string));
     }
     res.json(countries);
